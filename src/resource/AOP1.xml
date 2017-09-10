@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <bean id="userDao" class="com.xiaohu.aop.example1.UserDaoImpl"></bean>
+
+    <bean id="trans" class="com.xiaohu.aop.trans.Trans" />
+
+    <!--proxy-target-class对应的是调用jdk代理还是cglib代理 默认的为false（jdk代理） -->
+    <aop:config proxy-target-class="false">
+        <!--切入点表达式指向目标方法-->
+        <aop:pointcut id="perform" expression="execution(* com.xiaohu.aop.example1.UserDaoImpl.*(..))"></aop:pointcut>
+        <!--切面 ref指向切面-->
+        <aop:aspect ref="trans">
+
+            <!--前置通知 在目标方法之前 获取不到目标方法的返回值-->
+
+            <aop:before method="beginTran" pointcut-ref="perform" />
+
+            <!--后置通知 在目标方法之后，可以获取到目标方法的返回值 当目标方法抛出异常后 后置通知不在执行 -->
+            <aop:after-returning method="commit" pointcut-ref="perform" returning="val"/>
+
+            <!--最终通知 无论目标方法是否异常都将执行-->
+            <aop:after method="finalyAdv" pointcut-ref="perform" />
+
+            <!--异常通知-->
+            <aop:after-throwing method="throwingMethod" pointcut-ref="perform" throwing="ex"/>
+
+            <!--环绕通知 能控制目标方法的执行 -->
+        </aop:aspect>
+
+    </aop:config>
+
+</beans>

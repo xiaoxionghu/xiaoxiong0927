@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <bean id="person" class="com.xiaohu.demo1_accidence.createobj.di.Person">
+
+        <property name="id" value="1" ></property>
+        <property name="stu">
+            <ref bean="student" />
+        </property>
+
+        <property name="l">
+            <value>list1</value>
+            <value>list2</value>
+            <value>list3</value>
+        </property>
+
+        <property name="map" >
+            <map>
+                <entry key="haha">
+                    <value>map1</value>
+                </entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>111</props>
+        </property>
+
+        <property name="set">
+            <set>
+                <value>111</value>
+            </set>
+        </property>
+
+    </bean>
+
+
+    <bean id="student" class="com.xiaohu.demo1_accidence.createobj.di.Student" />
+
+    <alias name="student" alias="word" />
+
+</beans>

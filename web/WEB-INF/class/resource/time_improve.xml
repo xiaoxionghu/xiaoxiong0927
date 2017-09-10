@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <bean id="basedDao" class="com.xiaohu.demo.pm.dao.LoginDao"></bean>
+    <bean id="basedServlet" class="com.xiaohu.demo.pm.service.LoginService">
+        <property name="loginDao" ref="basedDao"></property>
+    </bean>
+    <bean id="basedAction" class="com.xiaohu.demo.pm.action.LoginAction">
+        <property name="loginService" ref="basedServlet"></property>
+    </bean>
+
+
+    <bean id="ta" class="com.xiaohu.demo.aspect.TimeAspect"></bean>
+
+    <aop:config>
+        <aop:pointcut id="perform" expression="execution(* com.xiaohu.demo.pm..*.*(..))"></aop:pointcut>
+        <aop:aspect ref="ta">
+            <aop:around method="methodExecutionTime" pointcut-ref="perform"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

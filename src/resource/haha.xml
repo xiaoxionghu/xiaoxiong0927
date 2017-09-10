@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <bean id="helloworld" class="com.xiaohu.demo1_accidence.createobj.HelloWord"/>
+
+
+    <bean id="hw" class="com.xiaohu.demo1_accidence.createobj.factory.HWFactory" />
+    <bean id="helloworld2" factory-bean="hw" factory-method="getInstace" />
+
+    <alias name="helloworld2" alias="word" />
+
+</beans>
